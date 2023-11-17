@@ -69,6 +69,21 @@ export function getStyleDictionaryConfig(
             }
           }
         ]
+      },
+      'web/css': {
+        transformGroup: 'tokens-css',
+        buildPath,
+        prefix: `${PREFIX}-`,
+        files: [
+          {
+            destination: 'tokens.css',
+            format: 'css/variables',
+            filter: {},
+            options: {
+              outputReferences: false
+            }
+          }
+        ]
       }
     }
   };
@@ -202,6 +217,11 @@ StyleDictionaryPackage.registerTransformGroup({
   transforms: ['name/cti/kebab', 'time/seconds', 'size/px', 'color/css']
 });
 
+StyleDictionaryPackage.registerTransformGroup({
+  name: 'tokens-css',
+  transforms: ['name/cti/kebab', 'time/seconds', 'size/px', 'color/css']
+});
+
 console.log('Build started...');
 
 PLATFORMS.map(function (platform) {
@@ -225,6 +245,7 @@ PLATFORMS.map(function (platform) {
     if (platform.name === 'web') {
       StyleDictionary.buildPlatform('web/js');
       StyleDictionary.buildPlatform('web/scss');
+      StyleDictionary.buildPlatform('web/css');
     }
 
     console.log('\nEnd processing');
